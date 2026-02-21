@@ -3,7 +3,8 @@
 @theme {
   --color-cream: #F5F5F0;
   --color-stone: #EDEDE6;
-  --color-forest: #228B22;
+  --color-forest: #4CAF50;
+  /* Summer leaf green */
   --color-terracotta: #D2691E;
   --color-text-main: #333333;
 
@@ -14,19 +15,27 @@
 
 @layer base {
   body {
-    @apply bg-cream text-text-main font-body antialiased min-h-screen selection:bg-forest selection:text-white custom-cursor-active overflow-x-hidden;
+    @apply bg-cream text-text-main font-body antialiased min-h-screen selection:bg-forest selection:text-white overflow-x-hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading tracking-tight;
   }
 }
 
 /* Custom Cursor Defaults */
-.custom-cursor-active, .custom-cursor-active * {
+.custom-cursor-active,
+.custom-cursor-active * {
   cursor: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   ::before,
   ::after {

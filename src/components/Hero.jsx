@@ -16,23 +16,28 @@ export default function Hero() {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         if (prefersReducedMotion) {
-            gsap.set([titleRef.current, subheadRef.current, ctaRef.current, badgeRef.current], { opacity: 1, y: 0 });
-            gsap.set(overlayRef.current, { backgroundColor: 'rgba(0,0,0,0.6)' });
+            if (titleRef.current) gsap.set([titleRef.current, subheadRef.current, ctaRef.current, badgeRef.current], { opacity: 1, y: 0 });
+            if (overlayRef.current) gsap.set(overlayRef.current, { backgroundColor: 'rgba(0,0,0,0.6)' });
             return;
         }
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         // Smoothly darken the map overlay after initial map reveal
-        tl.to(overlayRef.current, {
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            duration: 3,
-            delay: 3 // wait a bit while Earth is zooming
-        })
-            .fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, "-=1.5")
-            .fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2 }, "-=0.8")
-            .fromTo(subheadRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, "-=0.8")
-            .fromTo(ctaRef.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8 }, "-=0.6");
+        if (overlayRef.current) {
+            tl.to(overlayRef.current, {
+                backgroundColor: 'rgba(0,0,0,0.6)',
+                duration: 3,
+                delay: 3 // wait a bit while Earth is zooming
+            });
+        }
+
+        if (badgeRef.current && titleRef.current && subheadRef.current && ctaRef.current) {
+            tl.fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, "-=1.5")
+                .fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2 }, "-=0.8")
+                .fromTo(subheadRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, "-=0.8")
+                .fromTo(ctaRef.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8 }, "-=0.6");
+        }
 
         return () => tl.kill();
     }, []);

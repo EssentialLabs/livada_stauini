@@ -8,23 +8,23 @@ const ACCORDION_DATA = [
         subtitle: 'Moștenirea Familiei Morar',
         desc: 'De generații întregi, cultivăm pământul cu respect față de natură, păstrând soiuri autentice românești.',
         cta: 'Află Povestea',
-        image: 'https://images.unsplash.com/photo-1590483256056-b8db2ea8bb06?q=80&w=2670&auto=format&fit=crop'
+        image: 'https://cdn.adh.reperio.news/image-6/61938db2-fe85-4ef9-8619-8deff348a1ab/index.jpeg?p=a%3D1%26co%3D1.05%26w%3D700%26h%3D750%26r%3Dcontain%26f%3Dwebp'
     },
     {
         id: '02',
         title: 'Fructe de Sezon',
         subtitle: 'Natura în Fiecare Mușcătură',
-        desc: 'Cireșe de mai, caise parfumate și mere de toamnă. Fiecare anotimp aduce o explozie de prospețime direct în coșul tău.',
+        desc: 'Cireșe de mai, caise parfumate și platarine aromatizate. Fiecare anotimp aduce o explozie de prospețime direct în coșul tău.',
         cta: 'Vezi Calendarul',
-        image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=2670&auto=format&fit=crop'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Cherry_season_%2848216568227%29.jpg/800px-Cherry_season_%2848216568227%29.jpg' // Cherries on tree
     },
     {
         id: '03',
         title: 'Experiențe la Livadă',
         subtitle: 'Turism și Relaxare',
-        desc: 'Fugi de agitația orașului. Vino să îți culegi singur fructele și bucură-te de un picnic la umbra cireșilor bătrâni.',
+        desc: 'Fugi de agitația orașului. Vino să îți culegi singur fructele și bucură-te de un picnic la umbra pomilor fructiferi.',
         cta: 'Programează o Vizită',
-        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2626&auto=format&fit=crop' // Nature landscape
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Orchard_Lanes.jpg/800px-Orchard_Lanes.jpg' // Orchard in spring
     },
     {
         id: '04',
@@ -32,7 +32,7 @@ const ACCORDION_DATA = [
         subtitle: 'Rețete din Natură',
         desc: 'Savoarea inconfundabilă a fructelor netratate chimic agresiv. Din livada noastră, direct pe masa ta.',
         cta: 'Comandă Acum',
-        image: 'https://images.unsplash.com/photo-1601002931448-f027209707ce?q=80&w=2664&auto=format&fit=crop' // basket
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Apricot_and_cross_section.jpg/800px-Apricot_and_cross_section.jpg' // basket
     }
 ];
 
@@ -48,10 +48,14 @@ export default function HorizontalAccordion() {
     };
 
     return (
-        <section className="w-full py-20 bg-stone">
-            <div className="w-full h-[80vh] flex overflow-hidden">
+        <section className="w-full py-10 md:py-20 bg-stone">
+            <div className="w-full h-[120vh] md:h-[80vh] flex flex-col md:flex-row overflow-hidden">
                 {ACCORDION_DATA.map((item) => {
                     const isActive = activeId === item.id;
+
+                    // Determine inline flex style responsive to screen
+                    const activeDim = '100%';
+                    const inactiveDim = '15%';
 
                     return (
                         <div
@@ -70,8 +74,10 @@ export default function HorizontalAccordion() {
                             onMouseLeave={() => setHoveredId(null)}
                             className="group relative cursor-pointer outline-none transition-all focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-forest overflow-hidden"
                             style={{
-                                flexBasis: isActive ? '100%' : '15%',
-                                transition: 'flex-basis 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                                // Use flexGrow + flexBasis to handle both row and column elegantly
+                                flexGrow: isActive ? 1 : 0,
+                                flexBasis: isActive ? activeDim : inactiveDim,
+                                transition: 'flex-grow 0.8s cubic-bezier(0.16, 1, 0.3, 1), flex-basis 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
                             }}
                         >
                             {/* Background Image Container */}
@@ -99,13 +105,13 @@ export default function HorizontalAccordion() {
 
                             {/* Collapsed State Text */}
                             <div
-                                className={`absolute inset-0 flex flex-col justify-end items-center pb-12 transition-opacity duration-500
+                                className={`absolute inset-0 flex md:flex-col justify-end items-center pb-4 md:pb-12 px-6 md:px-0 transition-opacity duration-500
                   ${isActive ? 'opacity-0 pointer-events-none' : 'opacity-100'}
                 `}
                             >
-                                <div className="text-cream/50 font-mono text-sm mb-auto mt-8 tracking-widest">{item.id}</div>
-                                <div className="whitespace-nowrap -rotate-90 origin-bottom flex items-center mb-24">
-                                    <h3 className="text-xl md:text-2xl font-heading text-cream tracking-wide">{item.title}</h3>
+                                <div className="text-cream/50 font-mono text-xs md:text-sm mr-auto md:mr-0 mb-0 md:mb-auto md:mt-8 tracking-widest">{item.id}</div>
+                                <div className="whitespace-nowrap md:-rotate-90 origin-bottom flex items-center mb-0 md:mb-24 ml-4 md:ml-0">
+                                    <h3 className="text-lg md:text-2xl font-heading text-cream tracking-wide">{item.title}</h3>
                                 </div>
                             </div>
 
