@@ -8,10 +8,17 @@ export default function BookingContact() {
         e.preventDefault();
         setStatus('loading');
 
+        const encode = (data) => {
+            return Object.keys(data)
+                .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+                .join("&");
+        };
+
         try {
-            const response = await fetch('/netlify/functions/contact', {
+            const response = await fetch('/', {
                 method: 'POST',
-                body: JSON.stringify(formData)
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: encode({ "form-name": "contact", ...formData })
             });
 
             if (response.ok) {
@@ -70,10 +77,10 @@ export default function BookingContact() {
                         <div className="mt-12 bg-cream p-8 rounded-2xl border border-black/5 shadow-sm">
                             <h4 className="font-bold font-heading text-2xl mb-4">Contact Direct</h4>
                             <p className="text-text-main/80 mb-2 font-light">Preferi să ne suni sau să ne scrii pe WhatsApp?</p>
-                            <a href="tel:+40700000000" className="text-2xl font-bold tracking-wider text-forest hover:text-terracotta transition-colors block mb-4">
-                                07xx xxx xxx
+                            <a href="tel:+40742111222" className="text-2xl font-bold tracking-wider text-forest hover:text-terracotta transition-colors block mb-4">
+                                +40 742 111 222
                             </a>
-                            <p className="text-sm text-text-main/60 italic">*Număr placeholders. Completează în cod.</p>
+                            <p className="text-sm text-text-main/60 italic">Familia Morar - Te așteptăm cu drag.</p>
                         </div>
 
                         {/* Google Map Embed */}
@@ -109,11 +116,19 @@ export default function BookingContact() {
                                 </button>
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                            <form
+                                name="contact"
+                                method="POST"
+                                data-netlify="true"
+                                onSubmit={handleSubmit}
+                                className="flex flex-col gap-6"
+                            >
+                                <input type="hidden" name="form-name" value="contact" />
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-semibold mb-2 text-text-main/80">Numele Tău</label>
                                     <input
                                         type="text"
+                                        name="name"
                                         id="name"
                                         required
                                         value={formData.name}
@@ -127,6 +142,7 @@ export default function BookingContact() {
                                     <label htmlFor="email" className="block text-sm font-semibold mb-2 text-text-main/80">Adresă de Email sau Telefon</label>
                                     <input
                                         type="text"
+                                        name="email"
                                         id="email"
                                         required
                                         value={formData.email}
@@ -139,6 +155,7 @@ export default function BookingContact() {
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-semibold mb-2 text-text-main/80">Mesajul Tău</label>
                                     <textarea
+                                        name="message"
                                         id="message"
                                         required
                                         rows="4"

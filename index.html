@@ -15,6 +15,14 @@
   <body>
     <div class="noise-overlay"></div>
     <div id="root"></div>
+
+    <!-- Hidden form for Netlify to parse the React form fields -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="text" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+
     <!-- 
       Spectacular Earth Zoom Fallback Note:
       Google Maps API Key uses the exact placeholder env var requested.
