@@ -1,11 +1,56 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+const MIN_HUMAN_FILL_MS = 1200;
+const SUBMIT_COOLDOWN_MS = 10000;
+const INITIAL_FORM = { name: '', email: '', message: '', botField: '' };
 
 export default function BookingContact() {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [formData, setFormData] = useState(INITIAL_FORM);
     const [status, setStatus] = useState('idle');
+    const [errorMessage, setErrorMessage] = useState('');
+    const formLoadedAtRef = useRef(0);
+    const lastSubmitAtRef = useRef(0);
+
+    useEffect(() => {
+        formLoadedAtRef.current = Date.now();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
+
+        // Honeypot tripped: silently mimic success without hitting the backend.
+        if (formData.botField.trim().length > 0) {
+            setStatus('success');
+            setFormData(INITIAL_FORM);
+            return;
+        }
+
+        const now = Date.now();
+        if (now - formLoadedAtRef.current < MIN_HUMAN_FILL_MS) {
+            setStatus('error');
+            setErrorMessage('Te rugăm să aștepți o secundă înainte de a trimite mesajul.');
+            return;
+        }
+
+        if (lastSubmitAtRef.current && now - lastSubmitAtRef.current < SUBMIT_COOLDOWN_MS) {
+            setStatus('error');
+            setErrorMessage('Te rugăm să aștepți câteva secunde înainte să trimiți un alt mesaj.');
+            return;
+        }
+
+        const trimmed = {
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            message: formData.message.trim(),
+        };
+
+        if (!trimmed.name || !trimmed.email || !trimmed.message) {
+            setStatus('error');
+            setErrorMessage('Te rugăm să completezi toate câmpurile obligatorii.');
+            return;
+        }
+
         setStatus('loading');
 
         const encode = (data) => {
@@ -18,17 +63,24 @@ export default function BookingContact() {
             const response = await fetch('/', {
                 method: 'POST',
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: encode({ "form-name": "contact", ...formData })
+                body: encode({
+                    "form-name": "contact",
+                    "bot-field": formData.botField,
+                    ...trimmed,
+                })
             });
 
             if (response.ok) {
+                lastSubmitAtRef.current = Date.now();
                 setStatus('success');
-                setFormData({ name: '', email: '', message: '' });
+                setFormData(INITIAL_FORM);
             } else {
                 setStatus('error');
+                setErrorMessage('A apărut o eroare la trimiterea mesajului. Te rugăm să încerci telefonic.');
             }
-        } catch (err) {
+        } catch {
             setStatus('error');
+            setErrorMessage('A apărut o eroare la trimiterea mesajului. Te rugăm să încerci telefonic.');
         }
     };
 
@@ -109,7 +161,11 @@ export default function BookingContact() {
                                 <p className="font-bold text-lg mb-2">Mesaj Trimis cu Succes!</p>
                                 <p>Îți mulțumim. Petre Morar sau un membru al familiei te va contacta în cel mai scurt timp posibil.</p>
                                 <button
-                                    onClick={() => setStatus('idle')}
+                                    onClick={() => {
+                                        formLoadedAtRef.current = Date.now();
+                                        setErrorMessage('');
+                                        setStatus('idle');
+                                    }}
                                     className="mt-6 text-sm font-semibold hover:underline"
                                 >
                                     Trimite alt mesaj
@@ -120,10 +176,23 @@ export default function BookingContact() {
                                 name="contact"
                                 method="POST"
                                 data-netlify="true"
+                                netlify-honeypot="bot-field"
                                 onSubmit={handleSubmit}
-                                className="flex flex-col gap-6"
+                                className="flex flex-col gap-6 relative"
                             >
                                 <input type="hidden" name="form-name" value="contact" />
+                                <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
+                                    <label htmlFor="bot-field">Nu completa acest câmp</label>
+                                    <input
+                                        id="bot-field"
+                                        name="bot-field"
+                                        type="text"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        value={formData.botField}
+                                        onChange={(e) => setFormData({ ...formData, botField: e.target.value })}
+                                    />
+                                </div>
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-semibold mb-2 text-text-main/80">Numele Tău</label>
                                     <input
@@ -131,6 +200,7 @@ export default function BookingContact() {
                                         name="name"
                                         id="name"
                                         required
+                                        maxLength={120}
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         className="w-full bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow"
@@ -145,6 +215,7 @@ export default function BookingContact() {
                                         name="email"
                                         id="email"
                                         required
+                                        maxLength={160}
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         className="w-full bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow"
@@ -159,6 +230,7 @@ export default function BookingContact() {
                                         id="message"
                                         required
                                         rows="4"
+                                        maxLength={2000}
                                         value={formData.message}
                                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                         className="w-full bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow resize-none"
@@ -180,7 +252,9 @@ export default function BookingContact() {
                                 </button>
 
                                 {status === 'error' && (
-                                    <p className="text-red-500 text-sm text-center">A apărut o eroare la trimiterea mesajului. Te rugăm să încerci telefonic.</p>
+                                    <p role="alert" className="text-red-500 text-sm text-center">
+                                        {errorMessage || 'A apărut o eroare la trimiterea mesajului. Te rugăm să încerci telefonic.'}
+                                    </p>
                                 )}
                             </form>
                         )}
