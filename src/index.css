@@ -13,6 +13,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-cream text-text-main font-body antialiased min-h-screen selection:bg-forest selection:text-white overflow-x-hidden;
   }
@@ -25,12 +29,6 @@
   h6 {
     @apply font-heading tracking-tight;
   }
-}
-
-/* Custom Cursor Defaults */
-.custom-cursor-active,
-.custom-cursor-active * {
-  cursor: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

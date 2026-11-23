@@ -6,12 +6,12 @@ import { useContent } from '../hooks/useContent';
 gsap.registerPlugin(ScrollTrigger);
 
 const FRUITS = [
-    { id: 'cirese', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Cherry_season_%2848216568227%29.jpg/800px-Cherry_season_%2848216568227%29.jpg' }, // Cireșe
-    { id: 'caise', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Apricot_and_cross_section.jpg/800px-Apricot_and_cross_section.jpg' }, // Caise
+    { id: 'cirese', image: '/images/cherries.jpg' }, // Cireșe
+    { id: 'caise', image: '/images/apricots.jpg' }, // Caise
     { id: 'platarine', image: 'https://fructifer.ro/wp-content/uploads/2020/12/products-nectarine-turtite.jpg' }, // Flat peaches user provided
-    { id: 'piersici', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Autumn_Red_peaches.jpg/800px-Autumn_Red_peaches.jpg' }, // Piersici
+    { id: 'piersici', image: '/images/peaches.jpg' }, // Piersici
     { id: 'nectarine', image: 'https://info.ifa.coop/hubfs/nectarine-varieties-img2-1.png' }, // Nectarine user provided
-    { id: 'pere', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Pears.jpg/800px-Pears.jpg' }, // Pere
+    { id: 'pere', image: 'https://images.unsplash.com/photo-1787040548968-3ef9b4e20505?auto=format&fit=crop&w=1000&q=80' }, // Pere
 ];
 
 export default function FruitSeasonGrid() {
@@ -29,7 +29,7 @@ export default function FruitSeasonGrid() {
 
         const cards = cardsRef.current.filter(Boolean);
 
-        cards.forEach((card, index) => {
+        cards.forEach((card) => {
             gsap.fromTo(card,
                 { opacity: 0, y: 50 },
                 {
@@ -54,7 +54,7 @@ export default function FruitSeasonGrid() {
     if (!content.fruit_cirese_title) return null;
 
     return (
-        <section ref={sectionRef} className="w-full py-24 px-6 md:px-12 bg-cream">
+        <section id="calendar" ref={sectionRef} className="w-full py-24 px-6 md:px-12 bg-cream">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16 md:mb-24">
                     <h2 className="text-4xl md:text-6xl font-heading text-text-main font-bold mb-6">

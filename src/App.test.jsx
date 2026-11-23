@@ -42,10 +42,13 @@ describe('Livada Stăuini App & Anti-Bot Protections', () => {
         cleanup();
     });
 
-    test('App renders hero and contact section without crashing', () => {
+    test('App renders hero and contact section without custom cursor override', () => {
         render(<App />);
         expect(screen.getByText(/Descoperă Autenticitatea la Livada Stăuini/i)).toBeDefined();
         expect(screen.getByText(/Te Așteptăm în Livadă/i)).toBeDefined();
+        expect(document.body.classList.contains('custom-cursor-active')).toBe(false);
+        const heroCta = screen.getByRole('link', { name: /Vizitează Livada/i });
+        expect(heroCta.getAttribute('href')).toBe('#vizite');
     });
 
     test('BookingContact allows real user submission after normal fill time', async () => {

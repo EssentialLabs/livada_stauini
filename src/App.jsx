@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Hero from './components/Hero';
 import HorizontalAccordion from './components/HorizontalAccordion';
-import CustomCursor from './components/CustomCursor';
 import FruitSeasonGrid from './components/FruitSeasonGrid';
 import AboutStory from './components/AboutStory';
 import MediaReviews from './components/MediaReviews';
 import BookingContact from './components/BookingContact';
 
 function App() {
-  const [useCustomCursor, setUseCustomCursor] = useState(true);
-
   return (
     <div className="relative w-full min-h-screen">
-      <CustomCursor disabled={false} />
-
       <main>
         <Hero />
         <AboutStory />

@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useContent } from '../hooks/useContent';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutStory() {
-    const content = useContent();
     const textRef = useRef(null);
     const imageRef = useRef(null);
     const containerRef = useRef(null);
@@ -51,7 +49,7 @@ export default function AboutStory() {
     }, []);
 
     return (
-        <section ref={containerRef} className="w-full py-24 md:py-32 px-6 md:px-12 bg-stone/50 relative overflow-hidden">
+        <section id="poveste" ref={containerRef} className="w-full py-24 md:py-32 px-6 md:px-12 bg-stone/50 relative overflow-hidden">
             {/* Decorative background element */}
             <div className="absolute top-0 right-0 w-1/3 h-full bg-cream rounded-l-full opacity-50 -z-10 translate-x-1/2"></div>
 

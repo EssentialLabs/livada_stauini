@@ -23,20 +23,19 @@ export default function Hero() {
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        // Smoothly darken the map overlay after initial map reveal
+        // Smoothly darken the map overlay
         if (overlayRef.current) {
             tl.to(overlayRef.current, {
-                backgroundColor: 'rgba(0,0,0,0.6)',
-                duration: 3,
-                delay: 3 // wait a bit while Earth is zooming
+                backgroundColor: 'rgba(0,0,0,0.55)',
+                duration: 1.2,
             });
         }
 
         if (badgeRef.current && titleRef.current && subheadRef.current && ctaRef.current) {
-            tl.fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, "-=1.5")
-                .fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2 }, "-=0.8")
-                .fromTo(subheadRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, "-=0.8")
-                .fromTo(ctaRef.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8 }, "-=0.6");
+            tl.fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.9")
+                .fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9 }, "-=0.6")
+                .fromTo(subheadRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+                .fromTo(ctaRef.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.6 }, "-=0.5");
         }
 
         return () => tl.kill();
@@ -80,12 +79,13 @@ export default function Hero() {
                     {content.hero_subhead}
                 </p>
 
-                <button
+                <a
                     ref={ctaRef}
-                    className="bg-terracotta hover:bg-terracotta/90 text-cream px-8 py-4 rounded-xl font-bold text-lg transition-colors shadow-xl hover:shadow-terracotta/20 opacity-0"
+                    href="#vizite"
+                    className="inline-block bg-terracotta hover:bg-terracotta/90 text-cream px-8 py-4 rounded-xl font-bold text-lg transition-colors shadow-xl hover:shadow-terracotta/20 opacity-0"
                 >
                     {content.hero_cta}
-                </button>
+                </a>
             </div>
 
             {/* Scroll indicator */}

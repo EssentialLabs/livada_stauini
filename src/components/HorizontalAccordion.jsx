@@ -8,6 +8,7 @@ const ACCORDION_DATA = [
         subtitle: 'Moștenirea Familiei Morar',
         desc: 'De generații întregi, cultivăm pământul cu respect față de natură, păstrând soiuri autentice românești.',
         cta: 'Află Povestea',
+        href: '#poveste',
         image: 'https://cdn.adh.reperio.news/image-6/61938db2-fe85-4ef9-8619-8deff348a1ab/index.jpeg?p=a%3D1%26co%3D1.05%26w%3D700%26h%3D750%26r%3Dcontain%26f%3Dwebp'
     },
     {
@@ -16,7 +17,8 @@ const ACCORDION_DATA = [
         subtitle: 'Natura în Fiecare Mușcătură',
         desc: 'Cireșe de mai, caise parfumate și platarine aromatizate. Fiecare anotimp aduce o explozie de prospețime direct în coșul tău.',
         cta: 'Vezi Calendarul',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Cherry_season_%2848216568227%29.jpg/800px-Cherry_season_%2848216568227%29.jpg' // Cherries on tree
+        href: '#calendar',
+        image: '/images/cherries.jpg' // Cherries on tree
     },
     {
         id: '03',
@@ -24,7 +26,8 @@ const ACCORDION_DATA = [
         subtitle: 'Turism și Relaxare',
         desc: 'Fugi de agitația orașului. Vino să îți culegi singur fructele și bucură-te de un picnic la umbra pomilor fructiferi.',
         cta: 'Programează o Vizită',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Orchard_Lanes.jpg/800px-Orchard_Lanes.jpg' // Orchard in spring
+        href: '#vizite',
+        image: 'https://images.unsplash.com/photo-1762189493245-e673499defde?auto=format&fit=crop&w=1200&q=80' // Orchard in sun
     },
     {
         id: '04',
@@ -32,7 +35,8 @@ const ACCORDION_DATA = [
         subtitle: 'Rețete din Natură',
         desc: 'Savoarea inconfundabilă a fructelor netratate chimic agresiv. Din livada noastră, direct pe masa ta.',
         cta: 'Comandă Acum',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Apricot_and_cross_section.jpg/800px-Apricot_and_cross_section.jpg' // basket
+        href: '#vizite',
+        image: '/images/apricots.jpg' // Apricots
     }
 ];
 
@@ -134,9 +138,13 @@ export default function HorizontalAccordion() {
                                         <p className="text-cream/90 text-lg md:text-xl font-light mb-8 drop-shadow-md max-w-xl">
                                             {item.desc}
                                         </p>
-                                        <button className="bg-transparent border-2 border-cream text-cream hover:bg-cream hover:text-text-main px-8 py-3 rounded-full font-bold transition-colors">
+                                        <a
+                                            href={item.href}
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="inline-block bg-transparent border-2 border-cream text-cream hover:bg-cream hover:text-text-main px-8 py-3 rounded-full font-bold transition-colors"
+                                        >
                                             {item.cta}
-                                        </button>
+                                        </a>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
