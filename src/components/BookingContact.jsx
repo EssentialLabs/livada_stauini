@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { MapPin, Navigation } from 'lucide-react';
 
+const ORCHARD_COORDS = '46.033076,23.475022';
+const GOOGLE_MAPS_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${ORCHARD_COORDS}`;
+const WAZE_DIRECTIONS_URL = `https://waze.com/ul?ll=${ORCHARD_COORDS}&navigate=yes`;
 const MIN_HUMAN_FILL_MS = 1200;
 const SUBMIT_COOLDOWN_MS = 10000;
 const INITIAL_FORM = { name: '', email: '', message: '', botField: '' };
@@ -138,7 +142,7 @@ export default function BookingContact() {
                         {/* Google Map Embed */}
                         <div className="mt-8 rounded-2xl overflow-hidden shadow-md h-64 border border-black/5 relative">
                             <iframe
-                                src="https://maps.google.com/maps?q=46.033076,23.475022&z=15&output=embed"
+                                src={`https://maps.google.com/maps?q=${ORCHARD_COORDS}&z=15&output=embed`}
                                 width="100%"
                                 height="100%"
                                 frameBorder="0"
@@ -148,6 +152,28 @@ export default function BookingContact() {
                                 tabIndex="0"
                                 title="Google Maps Location"
                             ></iframe>
+                        </div>
+
+                        {/* Directions Buttons: Google Maps & Waze */}
+                        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <a
+                                href={GOOGLE_MAPS_DIRECTIONS_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-2.5 bg-forest text-cream hover:bg-forest/90 px-5 py-3.5 rounded-xl font-semibold text-sm md:text-base transition-all shadow-sm hover:shadow-md"
+                            >
+                                <MapPin className="w-5 h-5 shrink-0" aria-hidden="true" />
+                                <span>Direcții Google Maps</span>
+                            </a>
+                            <a
+                                href={WAZE_DIRECTIONS_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-2.5 bg-cream text-text-main hover:bg-stone border border-black/10 px-5 py-3.5 rounded-xl font-semibold text-sm md:text-base transition-all shadow-sm hover:shadow-md"
+                            >
+                                <Navigation className="w-5 h-5 shrink-0 text-terracotta" aria-hidden="true" />
+                                <span>Navighează cu Waze</span>
+                            </a>
                         </div>
                     </div>
 

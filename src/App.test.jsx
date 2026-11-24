@@ -49,6 +49,14 @@ describe('Livada Stăuini App & Anti-Bot Protections', () => {
         expect(document.body.classList.contains('custom-cursor-active')).toBe(false);
         const heroCta = screen.getByRole('link', { name: /Vizitează Livada/i });
         expect(heroCta.getAttribute('href')).toBe('#vizite');
+
+        const gmapsLink = screen.getByRole('link', { name: /Direcții Google Maps/i });
+        expect(gmapsLink.getAttribute('href')).toBe('https://www.google.com/maps/dir/?api=1&destination=46.033076,23.475022');
+        expect(gmapsLink.getAttribute('rel')).toBe('noopener noreferrer');
+
+        const wazeLink = screen.getByRole('link', { name: /Navighează cu Waze/i });
+        expect(wazeLink.getAttribute('href')).toBe('https://waze.com/ul?ll=46.033076,23.475022&navigate=yes');
+        expect(wazeLink.getAttribute('rel')).toBe('noopener noreferrer');
     });
 
     test('BookingContact allows real user submission after normal fill time', async () => {
