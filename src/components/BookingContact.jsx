@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapPin, Navigation } from 'lucide-react';
 
-const ORCHARD_COORDS = '46.033076,23.475022';
-const GOOGLE_MAPS_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${ORCHARD_COORDS}`;
-const WAZE_DIRECTIONS_URL = `https://waze.com/ul?ll=${ORCHARD_COORDS}&navigate=yes`;
+const PLACE_ID = 'ChIJBw92kI-nTkcR1cAzeD1MSJM';
+const GOOGLE_MAPS_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=Livada+Stauini&destination_place_id=${PLACE_ID}`;
+const WAZE_DIRECTIONS_URL = `https://www.waze.com/ul?to=place.${PLACE_ID}&navigate=yes`;
 const MIN_HUMAN_FILL_MS = 1200;
 const SUBMIT_COOLDOWN_MS = 10000;
 const INITIAL_FORM = { name: '', email: '', message: '', botField: '' };
@@ -142,7 +142,7 @@ export default function BookingContact() {
                         {/* Google Map Embed */}
                         <div className="mt-8 rounded-2xl overflow-hidden shadow-md h-64 border border-black/5 relative">
                             <iframe
-                                src={`https://maps.google.com/maps?q=${ORCHARD_COORDS}&z=15&output=embed`}
+                                src="https://maps.google.com/maps?q=Livada+Stauini,+Stauini+20,+517891&z=15&output=embed"
                                 width="100%"
                                 height="100%"
                                 loading="lazy"

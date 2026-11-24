@@ -51,11 +51,11 @@ describe('Livada Stăuini App & Anti-Bot Protections', () => {
         expect(heroCta.getAttribute('href')).toBe('#vizite');
 
         const gmapsLink = screen.getByRole('link', { name: /Direcții Google Maps/i });
-        expect(gmapsLink.getAttribute('href')).toBe('https://www.google.com/maps/dir/?api=1&destination=46.033076,23.475022');
+        expect(gmapsLink.getAttribute('href')).toBe('https://www.google.com/maps/dir/?api=1&destination=Livada+Stauini&destination_place_id=ChIJBw92kI-nTkcR1cAzeD1MSJM');
         expect(gmapsLink.getAttribute('rel')).toBe('noopener noreferrer');
 
         const wazeLink = screen.getByRole('link', { name: /Navighează cu Waze/i });
-        expect(wazeLink.getAttribute('href')).toBe('https://waze.com/ul?ll=46.033076,23.475022&navigate=yes');
+        expect(wazeLink.getAttribute('href')).toBe('https://www.waze.com/ul?to=place.ChIJBw92kI-nTkcR1cAzeD1MSJM&navigate=yes');
         expect(wazeLink.getAttribute('rel')).toBe('noopener noreferrer');
     });
 
