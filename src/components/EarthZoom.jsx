@@ -71,12 +71,6 @@ export default function EarthZoom() {
     return (
         <div className="relative w-full h-full overflow-hidden bg-black flex items-center justify-center pointer-events-none select-none">
             <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"></div>
-
-            <div className="absolute inset-x-4 bottom-12 sm:bottom-12 flex justify-center pointer-events-none z-10">
-                <div className="bg-black/65 backdrop-blur-md px-4 py-2 sm:px-6 sm:py-3 rounded-full border border-white/10 text-cream text-xs sm:text-sm md:text-base font-body shadow-2xl text-center">
-                    <span className="font-semibold text-terracotta">Livada Stăuini</span> — Stăuini, Vințu de Jos, Alba
-                </div>
-            </div>
         </div>
     );
 }

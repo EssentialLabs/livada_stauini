@@ -63,8 +63,15 @@ export default function Hero() {
                 </a>
             </div>
 
+            {/* Location Badge (above gradient overlay) */}
+            <div className="absolute inset-x-4 bottom-12 flex justify-center pointer-events-none z-20">
+                <div className="bg-black/65 backdrop-blur-md px-4 py-2 sm:px-6 sm:py-2.5 rounded-full border border-white/15 text-cream text-xs sm:text-sm md:text-base font-body shadow-2xl text-center">
+                    <span className="font-semibold text-terracotta">Livada Stăuini</span> — Stăuini, Vințu de Jos, Alba
+                </div>
+            </div>
+
             {/* Scroll indicator */}
-            <div className="absolute bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 text-cream/75 animate-bounce pointer-events-none">
+            <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 text-cream/75 animate-bounce pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M19 12l-7 7-7-7" /></svg>
             </div>
         </section>
