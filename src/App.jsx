@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import Hero from './components/Hero';
-import HorizontalAccordion from './components/HorizontalAccordion';
-import FruitSeasonGrid from './components/FruitSeasonGrid';
 import AboutStory from './components/AboutStory';
-import MediaReviews from './components/MediaReviews';
+import FruitSeasonGrid from './components/FruitSeasonGrid';
 import BookingContact from './components/BookingContact';
+
+const HorizontalAccordion = lazy(() => import('./components/HorizontalAccordion'));
+const MediaReviews = lazy(() => import('./components/MediaReviews'));
 
 function App() {
   return (
@@ -13,28 +14,32 @@ function App() {
         <Hero />
         <AboutStory />
         <FruitSeasonGrid />
-        <HorizontalAccordion />
-        <MediaReviews />
+        <Suspense fallback={<div className="w-full py-10 md:py-16 bg-stone min-h-[380px] md:min-h-[540px]" aria-hidden="true" />}>
+          <HorizontalAccordion />
+        </Suspense>
+        <Suspense fallback={<div className="w-full py-16 md:py-24 bg-cream min-h-[320px]" aria-hidden="true" />}>
+          <MediaReviews />
+        </Suspense>
         <BookingContact />
       </main>
 
-      {/* Basic Footer Scaffold */}
-      <footer className="w-full bg-forest text-cream py-12 px-6 flex flex-col items-center text-center gap-4">
-        <h2 className="text-2xl font-heading font-bold mb-2">Livada Stăuini</h2>
+      {/* Footer */}
+      <footer className="w-full bg-forest text-cream py-10 sm:py-12 px-6 flex flex-col items-center text-center gap-4">
+        <h2 className="text-2xl font-heading font-bold mb-1">Livada Stăuini</h2>
         <p className="text-sm opacity-90 max-w-sm">
           Stăuini, Vințu de Jos, Alba<br />
           Cod Poștal 517875, România
         </p>
 
-        <div className="flex gap-4 mt-4">
-          <a href="#" className="hover:text-terracotta transition-colors">Instagram</a>
-          <span className="opacity-30">|</span>
-          <a href="#" className="hover:text-terracotta transition-colors">Facebook</a>
-          <span className="opacity-30">|</span>
-          <a href="#" className="hover:text-terracotta transition-colors">YouTube</a>
+        <div className="flex flex-wrap justify-center gap-4 mt-2">
+          <a href="#" className="py-1 px-2 hover:text-terracotta transition-colors">Instagram</a>
+          <span className="opacity-30 py-1">|</span>
+          <a href="#" className="py-1 px-2 hover:text-terracotta transition-colors">Facebook</a>
+          <span className="opacity-30 py-1">|</span>
+          <a href="#" className="py-1 px-2 hover:text-terracotta transition-colors">YouTube</a>
         </div>
 
-        <p className="text-xs opacity-60 mt-8">
+        <p className="text-xs opacity-70 mt-6">
           Fotografii: Livada Stăuini / Unsplash<br />
           &copy; {new Date().getFullYear()} Livada Stăuini. Toate drepturile rezervate.
         </p>

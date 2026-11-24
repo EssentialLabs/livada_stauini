@@ -89,29 +89,29 @@ export default function BookingContact() {
     };
 
     return (
-        <section id="vizite" className="w-full py-24 px-6 md:px-12 bg-stone/30 relative">
+        <section id="vizite" className="w-full py-16 md:py-24 px-5 sm:px-6 md:px-12 bg-stone/30 relative">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16 md:mb-24">
-                    <span className="text-forest text-sm md:text-base font-semibold uppercase tracking-widest mb-4 block">
+                <div className="text-center mb-12 md:mb-20">
+                    <span className="text-forest text-sm md:text-base font-semibold uppercase tracking-widest mb-3 sm:mb-4 block">
                         Planifică o Vizită
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-heading text-text-main font-bold mb-6">
+                    <h2 className="text-3xl sm:text-4xl md:text-6xl font-heading text-text-main font-bold mb-4 sm:mb-6">
                         Te Așteptăm în Livadă
                     </h2>
-                    <p className="text-lg md:text-xl text-text-main/70 font-light max-w-2xl mx-auto">
+                    <p className="text-base sm:text-lg md:text-xl text-text-main/70 font-light max-w-2xl mx-auto">
                         Descoperă magia culesului și bucură-te de aer curat. Află regulile casei și contactează-ne pentru programări de grup sau evenimente speciale.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
 
                     {/* Rules & Details */}
                     <div className="flex flex-col">
-                        <h3 className="text-3xl font-heading font-bold mb-8 flex items-center gap-3">
+                        <h3 className="text-2xl sm:text-3xl font-heading font-bold mb-6 sm:mb-8 flex items-center gap-3">
                             <span className="text-forest">✽</span> Informații Utile
                         </h3>
 
-                        <ul className="space-y-6 text-lg text-text-main/80 font-light">
+                        <ul className="space-y-5 sm:space-y-6 text-base sm:text-lg text-text-main/80 font-light">
                             <li className="flex items-start gap-4">
                                 <span className="text-terracotta font-bold mt-1">1.</span>
                                 <span><strong className="font-semibold text-text-main">Programarea e esențială.</strong> Te rugăm să ne anunți vizita cu cel puțin 24h înainte, pentru a ne asigura că suntem la livadă și avem fructe coapte pe alese.</span>
@@ -145,6 +145,7 @@ export default function BookingContact() {
                                 src={`https://maps.google.com/maps?q=${ORCHARD_COORDS}&z=15&output=embed`}
                                 width="100%"
                                 height="100%"
+                                loading="lazy"
                                 frameBorder="0"
                                 style={{ border: 0 }}
                                 allowFullScreen=""
@@ -160,7 +161,7 @@ export default function BookingContact() {
                                 href={GOOGLE_MAPS_DIRECTIONS_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-2.5 bg-forest text-cream hover:bg-forest/90 px-5 py-3.5 rounded-xl font-semibold text-sm md:text-base transition-all shadow-sm hover:shadow-md"
+                                className="flex items-center justify-center gap-2.5 min-h-[48px] bg-forest text-cream hover:bg-forest/90 px-5 py-3.5 rounded-xl font-semibold text-sm md:text-base transition-all shadow-sm hover:shadow-md"
                             >
                                 <MapPin className="w-5 h-5 shrink-0" aria-hidden="true" />
                                 <span>Direcții Google Maps</span>
@@ -169,7 +170,7 @@ export default function BookingContact() {
                                 href={WAZE_DIRECTIONS_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-2.5 bg-cream text-text-main hover:bg-stone border border-black/10 px-5 py-3.5 rounded-xl font-semibold text-sm md:text-base transition-all shadow-sm hover:shadow-md"
+                                className="flex items-center justify-center gap-2.5 min-h-[48px] bg-cream text-text-main hover:bg-stone border border-black/10 px-5 py-3.5 rounded-xl font-semibold text-sm md:text-base transition-all shadow-sm hover:shadow-md"
                             >
                                 <Navigation className="w-5 h-5 shrink-0 text-terracotta" aria-hidden="true" />
                                 <span>Navighează cu Waze</span>
@@ -178,8 +179,8 @@ export default function BookingContact() {
                     </div>
 
                     {/* Contact Form */}
-                    <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-black/5">
-                        <h3 className="text-3xl font-heading font-bold mb-2">Scrie-ne un mesaj</h3>
+                    <div className="bg-white p-6 sm:p-8 md:p-12 rounded-3xl shadow-xl border border-black/5">
+                        <h3 className="text-2xl sm:text-3xl font-heading font-bold mb-2">Scrie-ne un mesaj</h3>
                         <p className="text-text-main/60 font-light mb-8">Pentru vizite de grup, achiziții angro sau colaborări.</p>
 
                         {status === 'success' ? (
@@ -229,7 +230,7 @@ export default function BookingContact() {
                                         maxLength={120}
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow"
+                                        className="w-full text-base bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow"
                                         placeholder="Ion Popescu"
                                     />
                                 </div>
@@ -244,7 +245,7 @@ export default function BookingContact() {
                                         maxLength={160}
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow"
+                                        className="w-full text-base bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow"
                                         placeholder="Date de contact..."
                                     />
                                 </div>
@@ -259,7 +260,7 @@ export default function BookingContact() {
                                         maxLength={2000}
                                         value={formData.message}
                                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                        className="w-full bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow resize-none"
+                                        className="w-full text-base bg-stone/50 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest transition-shadow resize-none"
                                         placeholder="Bună, aș dori să programez o vizită pentru..."
                                     ></textarea>
                                 </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 
 const ACCORDION_DATA = [
     {
@@ -18,7 +18,7 @@ const ACCORDION_DATA = [
         desc: 'Cireșe de mai, caise parfumate și platarine aromatizate. Fiecare anotimp aduce o explozie de prospețime direct în coșul tău.',
         cta: 'Vezi Calendarul',
         href: '#calendar',
-        image: '/images/cherries.jpg' // Cherries on tree
+        image: '/images/cherries.webp'
     },
     {
         id: '03',
@@ -27,7 +27,7 @@ const ACCORDION_DATA = [
         desc: 'Fugi de agitația orașului. Vino să îți culegi singur fructele și bucură-te de un picnic la umbra pomilor fructiferi.',
         cta: 'Programează o Vizită',
         href: '#vizite',
-        image: 'https://images.unsplash.com/photo-1762189493245-e673499defde?auto=format&fit=crop&w=1200&q=80' // Orchard in sun
+        image: 'https://images.unsplash.com/photo-1762189493245-e673499defde?auto=format&fit=crop&w=1000&q=80'
     },
     {
         id: '04',
@@ -36,120 +36,106 @@ const ACCORDION_DATA = [
         desc: 'Savoarea inconfundabilă a fructelor netratate chimic agresiv. Din livada noastră, direct pe masa ta.',
         cta: 'Comandă Acum',
         href: '#vizite',
-        image: '/images/apricots.jpg' // Apricots
+        image: '/images/apricots.webp'
     }
 ];
 
-// Reusable transition
-const transition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
-
 export default function HorizontalAccordion() {
     const [activeId, setActiveId] = useState(ACCORDION_DATA[0].id);
-    const [hoveredId, setHoveredId] = useState(null);
 
     const handleInteraction = (id) => {
         setActiveId(id);
     };
 
     return (
-        <section className="w-full py-10 md:py-20 bg-stone">
-            <div className="w-full h-[120vh] md:h-[80vh] flex flex-col md:flex-row overflow-hidden">
+        <section className="w-full py-10 md:py-16 bg-stone">
+            <div className="w-full h-auto md:h-[78vh] md:min-h-[540px] flex flex-col md:flex-row overflow-hidden">
                 {ACCORDION_DATA.map((item) => {
                     const isActive = activeId === item.id;
 
-                    // Determine inline flex style responsive to screen
-                    const activeDim = '100%';
-                    const inactiveDim = '15%';
-
                     return (
-                        <div
+                        <article
                             key={item.id}
-                            role="button"
-                            tabIndex={0}
-                            aria-expanded={isActive}
                             onClick={() => handleInteraction(item.id)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    handleInteraction(item.id);
+                            className={`group relative overflow-hidden transition-[flex-grow,flex-basis,min-height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+                                ${isActive
+                                    ? 'min-h-[380px] sm:min-h-[420px] md:min-h-0 md:flex-1 cursor-default'
+                                    : 'min-h-[72px] md:min-h-0 md:w-[15%] md:flex-none cursor-pointer'
                                 }
-                            }}
-                            onMouseEnter={() => setHoveredId(item.id)}
-                            onMouseLeave={() => setHoveredId(null)}
-                            className="group relative cursor-pointer outline-none transition-all focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-forest overflow-hidden"
-                            style={{
-                                // Use flexGrow + flexBasis to handle both row and column elegantly
-                                flexGrow: isActive ? 1 : 0,
-                                flexBasis: isActive ? activeDim : inactiveDim,
-                                transition: 'flex-grow 0.8s cubic-bezier(0.16, 1, 0.3, 1), flex-basis 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
-                            }}
+                            `}
                         >
                             {/* Background Image Container */}
-                            <div
-                                className="absolute inset-0 w-full h-full bg-black"
-                            >
+                            <div className="absolute inset-0 w-full h-full bg-black">
                                 <img
                                     src={item.image}
                                     alt={item.title}
-                                    className={`w-full h-[150%] max-w-none object-cover transition-all origin-center
-                    ${isActive ? 'scale-100 filter-none opacity-80' : 'scale-110 grayscale opacity-40'}
-                  `}
-                                    style={{
-                                        transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-                                    }}
+                                    loading="lazy"
+                                    decoding="async"
+                                    className={`w-full h-full md:h-[135%] max-w-none object-cover transition-all duration-500 origin-center
+                                        ${isActive ? 'scale-100 filter-none opacity-80' : 'scale-105 grayscale opacity-40'}
+                                    `}
                                 />
                             </div>
 
                             {/* Lower Gradient to Read Text */}
                             <div
-                                className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-700
-                  ${isActive ? 'opacity-100' : 'opacity-0'}
-                `}
+                                className={`absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity duration-300
+                                    ${isActive ? 'opacity-100' : 'opacity-40 md:opacity-0'}
+                                `}
                             />
 
-                            {/* Collapsed State Text */}
-                            <div
-                                className={`absolute inset-0 flex md:flex-col justify-end items-center pb-4 md:pb-12 px-6 md:px-0 transition-opacity duration-500
-                  ${isActive ? 'opacity-0 pointer-events-none' : 'opacity-100'}
-                `}
-                            >
-                                <div className="text-cream/50 font-mono text-xs md:text-sm mr-auto md:mr-0 mb-0 md:mb-auto md:mt-8 tracking-widest">{item.id}</div>
-                                <div className="whitespace-nowrap md:-rotate-90 origin-bottom flex items-center mb-0 md:mb-24 ml-4 md:ml-0">
-                                    <h3 className="text-lg md:text-2xl font-heading text-cream tracking-wide">{item.title}</h3>
-                                </div>
-                            </div>
+                            {/* Collapsed State Trigger */}
+                            {!isActive && (
+                                <button
+                                    type="button"
+                                    aria-expanded={false}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleInteraction(item.id);
+                                    }}
+                                    className="relative z-10 w-full h-full min-h-[72px] flex md:flex-col justify-between md:justify-end items-center px-6 py-4 md:pb-12 md:px-0 text-left focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-forest"
+                                >
+                                    <span className="text-cream/65 font-mono text-xs md:text-sm md:mb-auto md:mt-8 tracking-widest">
+                                        {item.id}
+                                    </span>
+                                    <span className="md:-rotate-90 origin-bottom flex items-center md:mb-24 ml-4 md:ml-0">
+                                        <span className="text-lg md:text-2xl font-heading text-cream tracking-wide whitespace-nowrap">
+                                            {item.title}
+                                        </span>
+                                    </span>
+                                </button>
+                            )}
 
                             {/* Expanded State Content */}
-                            <AnimatePresence>
+                            <AnimatePresence initial={false}>
                                 {isActive && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 30 }}
+                                    <Motion.div
+                                        initial={{ opacity: 0, y: 16 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 10 }}
-                                        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                                        className="absolute inset-x-0 bottom-0 p-8 md:p-12 lg:p-16 flex flex-col items-start max-w-3xl"
+                                        exit={{ opacity: 0, y: 8 }}
+                                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                                        className="relative z-10 h-full min-h-[380px] sm:min-h-[420px] md:min-h-0 flex flex-col justify-end items-start p-6 sm:p-8 md:p-12 lg:p-16 max-w-3xl"
                                     >
-                                        <span className="text-forest text-sm md:text-base font-semibold uppercase tracking-widest mb-3" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}>
+                                        <span className="text-forest text-xs sm:text-sm md:text-base font-semibold uppercase tracking-widest mb-2 sm:mb-3" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
                                             {item.id} — {item.subtitle}
                                         </span>
-                                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading text-cream font-bold leading-tight mb-4 drop-shadow-xl">
+                                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading text-cream font-bold leading-tight mb-3 sm:mb-4 drop-shadow-xl">
                                             {item.title}
                                         </h2>
-                                        <p className="text-cream/90 text-lg md:text-xl font-light mb-8 drop-shadow-md max-w-xl">
+                                        <p className="text-cream/90 text-sm sm:text-base md:text-xl font-light mb-6 sm:mb-8 drop-shadow-md max-w-xl">
                                             {item.desc}
                                         </p>
                                         <a
                                             href={item.href}
                                             onClick={(e) => e.stopPropagation()}
-                                            className="inline-block bg-transparent border-2 border-cream text-cream hover:bg-cream hover:text-text-main px-8 py-3 rounded-full font-bold transition-colors"
+                                            className="inline-flex items-center justify-center min-h-[44px] bg-transparent border-2 border-cream text-cream hover:bg-cream hover:text-text-main px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold text-sm sm:text-base transition-colors"
                                         >
                                             {item.cta}
                                         </a>
-                                    </motion.div>
+                                    </Motion.div>
                                 )}
                             </AnimatePresence>
-
-                        </div>
+                        </article>
                     );
                 })}
             </div>
